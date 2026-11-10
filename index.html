@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bg">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Apartment 4 · 12 · 20 — Virtual Walkthrough</title>
+<title>Апартамент 4 · 12 · 20 — Виртуална разходка</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -58,27 +58,27 @@
 <div id="cross"></div>
 
 <div id="title" class="card">
-  <div class="eyebrow">Dream Garden 5 · Virtual walk</div>
-  <h1>Apartments 4, 12 &amp; 20</h1>
-  <div class="sub">4-room · 123.05 m² built · S / E / W exposure</div>
+  <div class="eyebrow">Dream Garden 5 · Виртуална разходка</div>
+  <h1>Апартаменти 4, 12 и 20</h1>
+  <div class="sub">Четиристаен · 123,05 м² застроена площ · Юг / Изток / Запад</div>
 </div>
 
-<div id="room" class="card"><div class="n">Hallway</div><div class="a"></div></div>
+<div id="room" class="card"><div class="n">Коридор</div><div class="a"></div></div>
 
 <div id="side" class="card">
-  <button class="btn" id="mapToggle" style="display:none;margin-bottom:4px">🗺 Plan &amp; rooms</button>
-  <div class="lbl">Floor plan · click to jump</div>
+  <button class="btn" id="mapToggle" style="display:none;margin-bottom:4px">🗺 План и стаи</button>
+  <div class="lbl">План · кликнете за преход</div>
   <canvas id="map" width="456" height="372"></canvas>
   <div id="rooms"></div>
 </div>
 
 <div id="help" class="card">
-  <b>W</b><b>A</b><b>S</b><b>D</b> walk &nbsp; <b>Shift</b> faster<br>
-  Mouse: look around (click scene first) &nbsp; <b>Esc</b> release
+  <b>W</b><b>A</b><b>S</b><b>D</b> ходене &nbsp; <b>Shift</b> по-бързо<br>
+  Мишка: оглеждане (първо кликнете в сцената) &nbsp; <b>Esc</b> освобождаване
 </div>
 
 <div id="tourbar" class="card">
-  <button class="btn primary" id="tourBtn">▶ Guided tour</button>
+  <button class="btn primary" id="tourBtn">▶ Обиколка с гид</button>
 </div>
 
 <div id="joy"><div id="knob"></div></div>
@@ -86,16 +86,16 @@
 <div id="start">
   <div class="box">
     <div style="font-size:10px;letter-spacing:.22em;color:#6b6f75;text-transform:uppercase">Dream Garden 5</div>
-    <h2>Step inside<br>the apartment</h2>
-    <p>A 3D walkthrough based on the floor plan of apartments 4, 12 and 20: living room with kitchen and dining area, three bedrooms, two bathrooms and two terraces.</p>
+    <h2>Влезте<br>в апартамента</h2>
+    <p>3D разходка по разпределението на апартаменти 4, 12 и 20: дневна с кухня и трапезария, три спални, две бани и две тераси.</p>
     <div class="row">
-      <button class="btn primary" id="goWalk">Walk freely</button>
-      <button class="btn" id="goTour">Guided tour</button>
+      <button class="btn primary" id="goWalk">Свободна разходка</button>
+      <button class="btn" id="goTour">Обиколка с гид</button>
     </div>
-    <div class="note">On a phone: use the joystick at bottom-left to walk and drag anywhere to look around.<br>Room proportions follow the plan; furniture and finishes are illustrative.</div>
+    <div class="note">На телефон: използвайте джойстика долу вляво за ходене и плъзнете с пръст навсякъде, за да се оглеждате.<br>Пропорциите на стаите следват плана; обзавеждането и материалите са илюстративни.</div>
   </div>
 </div>
-<div id="err">The 3D engine couldn't load. Please check your connection and reload the page.</div>
+<div id="err">3D визуализацията не успя да се зареди. Проверете връзката си и презаредете страницата.</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
@@ -256,16 +256,16 @@ function railing(x1,z1,x2,z2){
 /* ---------- rooms (traced from the plan, metres; x = east, z = south) ---------- */
 const yawTo=(dx,dz)=>Math.atan2(-dx,-dz);
 const rooms=[
- {n:'Living room · kitchen · dining',a:'32.16 m²',f:'wood',r:[[0.15,0.12,6.62,4.85],[4.0,4.85,6.62,6.3]],tp:[5.3,0.8,yawTo(-1,.8)],short:'Living'},
- {n:'Hallway',a:'',f:'wood',r:[[6.62,0.12,11.15,1.3],[9.3,-4.82,10.65,0.12],[10.65,-4.82,11.3,-2.85],[10.65,-0.2,11.15,0.12]],tp:[10.0,-4.2,Math.PI],short:'Hallway'},
- {n:'Bathroom with WC',a:'5.40 m²',f:'tile',r:[[7.3,-2.95,9.3,0.12]],tp:[8.95,-0.5,yawTo(-1,-.35)],short:'Bath 1'},
- {n:'Storage',a:'1.10 m²',f:'wood',r:[[11.3,-3.98,12.93,-2.85]],tp:[10.95,-3.4,yawTo(1,0)],short:'Storage'},
- {n:'Bedroom',a:'12.90 m²',f:'wood',r:[[10.65,-2.85,14.3,-0.2],[11.15,-0.2,14.3,1.3]],tp:[11.7,0.7,yawTo(1,-.9)],short:'Bedroom 12.9'},
- {n:'Bedroom',a:'14.30 m²',f:'wood',r:[[9.85,1.3,14.3,4.85]],tp:[10.85,4.3,yawTo(1,-1)],short:'Bedroom 14.3'},
- {n:'Bathroom with WC',a:'3.20 m²',f:'tile',r:[[6.62,1.3,8.7,2.98]],tp:[8.25,1.85,yawTo(-1,.3)],short:'Bath 2'},
- {n:'Bedroom',a:'12.10 m²',f:'wood',r:[[6.62,2.98,9.85,6.3],[8.7,1.3,9.85,2.98]],tp:[9.3,3.4,yawTo(-1,.6)],short:'Bedroom 12.1'},
- {n:'Terrace (west)',a:'',f:'deck',r:[[0.1,4.85,4.0,6.5]],tp:[1.75,5.6,yawTo(1,.1)],short:'Terrace W'},
- {n:'Terrace (east)',a:'',f:'deck',r:[[9.85,4.85,14.4,6.5]],tp:[10.8,5.6,yawTo(1,0)],short:'Terrace E'},
+ {n:'Дневна с кухня и трапезария',a:'32,16 м²',f:'wood',r:[[0.15,0.12,6.62,4.85],[4.0,4.85,6.62,6.3]],tp:[5.3,0.8,yawTo(-1,.8)],short:'Дневна'},
+ {n:'Коридор',a:'',f:'wood',r:[[6.62,0.12,11.15,1.3],[9.3,-4.82,10.65,0.12],[10.65,-4.82,11.3,-2.85],[10.65,-0.2,11.15,0.12]],tp:[10.0,-4.2,Math.PI],short:'Коридор'},
+ {n:'Баня с тоалетна',a:'5,40 м²',f:'tile',r:[[7.3,-2.95,9.3,0.12]],tp:[8.95,-0.5,yawTo(-1,-.35)],short:'Баня 5,4'},
+ {n:'Склад',a:'1,10 м²',f:'wood',r:[[11.3,-3.98,12.93,-2.85]],tp:[10.95,-3.4,yawTo(1,0)],short:'Склад'},
+ {n:'Спалня',a:'12,90 м²',f:'wood',r:[[10.65,-2.85,14.3,-0.2],[11.15,-0.2,14.3,1.3]],tp:[11.7,0.7,yawTo(1,-.9)],short:'Спалня 12,9'},
+ {n:'Спалня',a:'14,30 м²',f:'wood',r:[[9.85,1.3,14.3,4.85]],tp:[10.85,4.3,yawTo(1,-1)],short:'Спалня 14,3'},
+ {n:'Баня с тоалетна',a:'3,20 м²',f:'tile',r:[[6.62,1.3,8.7,2.98]],tp:[8.25,1.85,yawTo(-1,.3)],short:'Баня 3,2'},
+ {n:'Спалня',a:'12,10 м²',f:'wood',r:[[6.62,2.98,9.85,6.3],[8.7,1.3,9.85,2.98]],tp:[9.3,3.4,yawTo(-1,.6)],short:'Спалня 12,1'},
+ {n:'Тераса (запад)',a:'',f:'deck',r:[[0.1,4.85,4.0,6.5]],tp:[1.75,5.6,yawTo(1,.1)],short:'Тераса З'},
+ {n:'Тераса (изток)',a:'',f:'deck',r:[[9.85,4.85,14.4,6.5]],tp:[10.8,5.6,yawTo(1,0)],short:'Тераса И'},
 ];
 for(const rm of rooms)for(const r of rm.r){
   const m=rm.f==='wood'?mat.wood:rm.f==='tile'?mat.tile:mat.deck;
@@ -529,8 +529,8 @@ cv.addEventListener('pointerup',endLook);cv.addEventListener('pointercancel',end
 const tourPts=[[10.0,-4.2],[10.0,-.5],[8.6,-.5],[8.4,-1.3],[8.6,-.5],[10.0,-.5],[10.0,.7],[11.7,.7],[12.3,0],[11.7,.7],[10.43,.8],[10.43,1.8],[10.75,2.2],[10.75,4.2],[10.8,5.6],[11.6,5.6],[10.8,5.6],[10.8,4.2],[10.75,2.2],[10.43,1.0],[9.3,.8],[9.3,1.9],[8.2,1.9],[9.3,1.9],[9.3,3.6],[9.3,4.6],[9.3,1.9],[9.3,.8],[7.0,.75],[6.0,.75],[4.0,.9],[4.6,2.2],[5.4,3.8],[5.0,5.6],[4.6,4.5],[1.75,4.3],[1.75,5.55],[1.8,5.6]];
 let touring=false,tourSeg=0,tourT=0;
 const tourBtn=document.getElementById('tourBtn');
-function startTour(){touring=true;tourSeg=0;tourT=0;P.x=tourPts[0][0];P.z=tourPts[0][1];P.pitch=-.04;tourBtn.textContent='■ Stop tour';}
-function stopTour(){if(!touring)return;touring=false;tourBtn.textContent='▶ Guided tour';}
+function startTour(){touring=true;tourSeg=0;tourT=0;P.x=tourPts[0][0];P.z=tourPts[0][1];P.pitch=-.04;tourBtn.textContent='■ Спри обиколката';}
+function stopTour(){if(!touring)return;touring=false;tourBtn.textContent='▶ Обиколка с гид';}
 tourBtn.onclick=()=>{touring?stopTour():startTour();cv.focus();};
 function angLerp(a,b,t){let d=((b-a+Math.PI)%(2*Math.PI)+2*Math.PI)%(2*Math.PI)-Math.PI;return a+d*t;}
 function stepTour(dt){
