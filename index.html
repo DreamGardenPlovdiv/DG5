@@ -144,23 +144,13 @@ function span(o){const ux=o.b[0]-o.a[0],uz=o.b[1]-o.a[1],L=Math.hypot(ux,uz),n=o
 function obox(s,y0,y1,m,cast=true,shrink=0){if(y1-y0<0.005)return;const w=s.alongX?s.L-shrink:s.t,d=s.alongX?s.t:s.L-shrink;return addBox(w,y1-y0,d,s.cx,(y0+y1)/2,s.cz,m,cast);}
 const signs=[];
 MODEL.doors.forEach(o=>{const s=span(o);obox(s,o.h,H,mat.wall);
- // casing
- const ct=s.t+0.03;const fr=(w,d,x,z,y0,y1)=>addBox(w,y1-y0,d,x,(y0+y1)/2,z,mat.frame,false);
- const e1x=o.a[0]+o.n[0]*(o.lo+o.hi)/2,e1z=o.a[1]+o.n[1]*(o.lo+o.hi)/2,e2x=o.b[0]+o.n[0]*(o.lo+o.hi)/2,e2z=o.b[1]+o.n[1]*(o.lo+o.hi)/2;
- if(s.alongX){fr(0.05,ct,e1x+s.ux*0.025,e1z,0,o.h);fr(0.05,ct,e2x-s.ux*0.025,e2z,0,o.h);fr(s.L,ct,s.cx,s.cz,o.h-0.05,o.h);}
- else{fr(ct,0.05,e1x,e1z+s.uz*0.025,0,o.h);fr(ct,0.05,e2x,e2z-s.uz*0.025,0,o.h);fr(ct,s.L,s.cx,s.cz,o.h-0.05,o.h);}
- // door leaf, open
- const lx=o.o[0]-o.a[0],lz=o.o[1]-o.a[1],ll=Math.hypot(lx,lz)*0.97;const isE=o.tag==='В1',isB=o.tag==='A8';
- const lm=isE?mat.doorE:isB?mat.glass:mat.doorW;const th=0.04;
- const mx=o.a[0]+lx/2+(-o.n[0])*0.0,mz=o.a[1]+lz/2;
- const leaf=Math.abs(lx)>Math.abs(lz)?addBox(ll,o.h-0.02,th,mx,(o.h-0.02)/2,mz+Math.sign(o.b[1]-o.a[1]||1)*th/2,lm):addBox(th,o.h-0.02,ll,mx+Math.sign(o.b[0]-o.a[0]||1)*th/2,(o.h-0.02)/2,mz,lm);
- if(isB){const bx=Math.abs(lx)>Math.abs(lz);addBox(bx?ll:0.05,0.05,bx?0.05:ll,leaf.position.x,o.h-0.05,leaf.position.z,mat.frame);addBox(bx?ll:0.05,0.05,bx?0.05:ll,leaf.position.x,0.03,leaf.position.z,mat.frame);}
  if(o.entr&&o.apt!=null&&o.tag==='В1')signs.push(o);
 });
 MODEL.wins.forEach(o=>{const s=span(o);obox(s,0,o.s,mat.wall);obox(s,o.s+o.h,H,mat.wall);
- const gl=s.alongX?addBox(s.L,o.h,0.02,s.cx,o.s+o.h/2,s.cz,mat.glass,false):addBox(0.02,o.h,s.L,s.cx,o.s+o.h/2,s.cz,mat.glass,false);
- const f=(w,h,d,y)=>addBox(w,h,d,s.cx,y,s.cz,mat.frame,false);
- if(s.alongX){f(s.L,0.05,0.07,o.s+0.025);f(s.L,0.05,0.07,o.s+o.h-0.025);}else{f(0.07,0.05,s.L,o.s+0.025);f(0.07,0.05,s.L,o.s+o.h-0.025);}
+ const gl=s.alongX?addBox(s.L,o.h,0.008,s.cx,o.s+o.h/2,s.cz,mat.glass,false):addBox(0.008,o.h,s.L,s.cx,o.s+o.h/2,s.cz,mat.glass,false);
+ const fw=0.025,fd=0.04,f=(w,h,d,x,y,z)=>addBox(w,h,d,x,y,z,mat.frame,false);
+ if(s.alongX){f(s.L,fw,fd,s.cx,o.s+fw/2,s.cz);f(s.L,fw,fd,s.cx,o.s+o.h-fw/2,s.cz);f(fw,o.h,fd,s.cx-s.L/2+fw/2,o.s+o.h/2,s.cz);f(fw,o.h,fd,s.cx+s.L/2-fw/2,o.s+o.h/2,s.cz);if(s.L>1.3)f(fw,o.h,fd,s.cx,o.s+o.h/2,s.cz);}
+ else{f(fd,fw,s.L,s.cx,o.s+fw/2,s.cz);f(fd,fw,s.L,s.cx,o.s+o.h-fw/2,s.cz);f(fd,o.h,fw,s.cx,o.s+o.h/2,s.cz-s.L/2+fw/2);f(fd,o.h,fw,s.cx,o.s+o.h/2,s.cz+s.L/2-fw/2);if(s.L>1.3)f(fd,o.h,fw,s.cx,o.s+o.h/2,s.cz);}
  const x0=Math.min(o.a[0],o.b[0]),z0=Math.min(o.a[1],o.b[1]);const n=o.n;
  const cx0=s.cx-(s.alongX?s.L/2:s.t/2),cz0=s.cz-(s.alongX?s.t/2:s.L/2);block(cx0,cz0,s.alongX?s.L:s.t,s.alongX?s.t:s.L);});
 
@@ -171,7 +161,9 @@ for(const [t,rects] of Object.entries(MODEL.floors)){const m=new THREE.Mesh(rect
 
 /* railings */
 MODEL.rails.forEach(([x0,z0,x1,z1])=>{const L=Math.hypot(x1-x0,z1-z0);if(L<0.05)return;const ax=Math.abs(x1-x0)>Math.abs(z1-z0);const cx=(x0+x1)/2,cz=(z0+z1)/2;
- addBox(ax?L:0.02,1.0,ax?0.02:L,cx,0.5,cz,mat.glass,false);addBox(ax?L:0.05,0.05,ax?0.05:L,cx,1.03,cz,mat.frame);
+ addBox(ax?L:0.008,0.95,ax?0.008:L,cx,0.5,cz,mat.glass,false);
+ const hr=new THREE.Mesh(new THREE.CylinderGeometry(0.015,0.015,L,10),mat.steel);hr.position.set(cx,1.0,cz);hr.rotation.set(ax?0:Math.PI/2,0,ax?Math.PI/2:0);hr.castShadow=true;scene.add(hr);
+ const np=Math.max(1,Math.round(L/1.2));for(let i=0;i<=np;i++){const t=i/np;const p=new THREE.Mesh(new THREE.CylinderGeometry(0.012,0.012,1.0,8),mat.steel);p.position.set(x0+(x1-x0)*t,0.5,z0+(z1-z0)*t);scene.add(p);}
  block(Math.min(x0,x1)-0.05,Math.min(z0,z1)-0.05,ax?L+0.1:0.1,ax?0.1:L+0.1);});
 
 /* stairs */
