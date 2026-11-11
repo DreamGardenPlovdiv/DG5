@@ -49,7 +49,7 @@ body.touch #joy{display:block}
  #side{width:auto;padding:6px}#side .lbl,#map,#apts{display:none}
  #side.open{width:220px;padding:8px}#side.open #map{display:block;width:204px}#side.open #apts{display:flex}#side.open .lbl{display:block}
  #mapToggle{display:inline-block}
- #room{top:auto;bottom:160px}
+ #room{top:auto;bottom:16px;left:auto;right:12px;transform:none;min-width:0;padding:6px 12px;max-width:52vw}#room .n{font-size:15px}#room .ap{font-size:9px}#room .a{font-size:10px}
 }
 </style>
 </head>
@@ -100,7 +100,7 @@ renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
 renderer.outputEncoding=THREE.sRGBEncoding;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;
 const C=h=>new THREE.Color(h).convertSRGBToLinear();
 const scene=new THREE.Scene();scene.background=C(0xcfe3f0);scene.fog=new THREE.Fog(C(0xcfe3f0),60,220);
-const camera=new THREE.PerspectiveCamera(72,innerWidth/innerHeight,0.05,500);camera.rotation.order='YXZ';
+const camera=new THREE.PerspectiveCamera(85,innerWidth/innerHeight,0.05,500);camera.rotation.order='YXZ';
 
 /* textures */
 const aniso=renderer.capabilities.getMaxAnisotropy();
@@ -333,7 +333,7 @@ setFloor(0);setFurn(true);document.getElementById('furnBtn').onclick=()=>{setFur
 const clock=new THREE.Clock();
 function frame(){const dt=Math.min(clock.getDelta(),.05);let f=0,s=0;
  if(keys.KeyW||keys.ArrowUp)f+=1;if(keys.KeyS||keys.ArrowDown)f-=1;if(keys.KeyD||keys.ArrowRight)s+=1;if(keys.KeyA||keys.ArrowLeft)s-=1;f+=-joyV.y;s+=joyV.x;
- const m=Math.hypot(f,s);if(m>.05){const sp=(keys.ShiftLeft||keys.ShiftRight?3.0:1.6)*dt/Math.max(1,m);const fx=-Math.sin(P.yaw),fz=-Math.cos(P.yaw),rx=Math.cos(P.yaw),rz=-Math.sin(P.yaw);tryMove((fx*f+rx*s)*sp,(fz*f+rz*s)*sp);}
+ const m=Math.hypot(f,s);if(m>.05){const sp=(keys.ShiftLeft||keys.ShiftRight?4.5:2.6)*dt/Math.max(1,m);const fx=-Math.sin(P.yaw),fz=-Math.cos(P.yaw),rx=Math.cos(P.yaw),rz=-Math.sin(P.yaw);tryMove((fx*f+rx*s)*sp,(fz*f+rz*s)*sp);}
  if(window.__dbg){camera.position.set(...window.__dbg.p);camera.lookAt(...window.__dbg.t);}else{camera.position.set(P.x,EYE,P.z);camera.rotation.set(P.pitch,P.yaw,0);}hud();drawMap();renderer.render(scene,camera);requestAnimationFrame(frame);}
 addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
 window.__walk={coll,GW,GH,CG,grid,G,P,scene,camera,renderer,setFloor,roomAt,blocked};
