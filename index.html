@@ -291,7 +291,7 @@ joy.addEventListener('pointermove',e=>{if(e.pointerId===joyId)mj(e);});
 const ej=e=>{if(e.pointerId===joyId){joyId=null;joyV={x:0,y:0};knob.style.transform='';}};joy.addEventListener('pointerup',ej);joy.addEventListener('pointercancel',ej);
 function mj(e){const r=joy.getBoundingClientRect();let x=e.clientX-(r.left+r.width/2),y=e.clientY-(r.top+r.height/2);const m=Math.hypot(x,y),mx=r.width/2-10;if(m>mx){x*=mx/m;y*=mx/m;}knob.style.transform=`translate(${x}px,${y}px)`;joyV={x:x/mx,y:y/mx};}
 cv.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse'){lookId=e.pointerId;lx=e.clientX;ly=e.clientY;}});
-cv.addEventListener('pointermove',e=>{if(e.pointerId===lookId){look((e.clientX-lx)*1.4,(e.clientY-ly)*1.4);lx=e.clientX;ly=e.clientY;}});
+cv.addEventListener('pointermove',e=>{if(e.pointerId===lookId){look((e.clientX-lx)*3.6,(e.clientY-ly)*2.6);lx=e.clientX;ly=e.clientY;}});
 const el=e=>{if(e.pointerId===lookId)lookId=null;};cv.addEventListener('pointerup',el);cv.addEventListener('pointercancel',el);
 
 /* UI: floors, apartments, map */
