@@ -282,9 +282,9 @@ addEventListener('keydown',e=>{keys[e.code]=true;if(e.code.startsWith('Arrow'))e
 let dragging=false,lx=0,ly=0;const LOOK=.0024;
 function look(dx,dy){P.yaw-=dx*LOOK;P.pitch=Math.max(-1.35,Math.min(1.35,P.pitch-dy*LOOK));}
 const isTouch=matchMedia('(pointer:coarse)').matches;if(isTouch)document.body.classList.add('touch');
-cv.addEventListener('mousedown',e=>{cv.focus();dragging=true;lx=e.clientX;ly=e.clientY;if(!isTouch&&document.pointerLockElement!==cv){try{const p=cv.requestPointerLock();if(p&&p.catch)p.catch(()=>{});}catch(_){}}});
+cv.addEventListener('mousedown',e=>{cv.focus();dragging=true;lx=e.clientX;ly=e.clientY;if(!isTouch&&document.pointerLockElement!==cv){try{const p=cv.requestPointerLock({unadjustedMovement:true});if(p&&p.catch)p.catch(()=>{try{cv.requestPointerLock();}catch(_){}});}catch(_){try{cv.requestPointerLock();}catch(__){}}}});
 addEventListener('mouseup',()=>dragging=false);
-addEventListener('mousemove',e=>{if(document.pointerLockElement===cv)look(e.movementX,e.movementY);else if(dragging){look(e.clientX-lx,e.clientY-ly);lx=e.clientX;ly=e.clientY;}});
+addEventListener('mousemove',e=>{if(document.pointerLockElement===cv){const dx=e.movementX,dy=e.movementY;if(Math.abs(dx)>150||Math.abs(dy)>150)return;look(Math.max(-60,Math.min(60,dx)),Math.max(-60,Math.min(60,dy)));}else if(dragging){look(e.clientX-lx,e.clientY-ly);lx=e.clientX;ly=e.clientY;}});
 const joy=document.getElementById('joy'),knob=document.getElementById('knob');let joyId=null,joyV={x:0,y:0},lookId=null;
 joy.addEventListener('pointerdown',e=>{joyId=e.pointerId;joy.setPointerCapture(e.pointerId);mj(e);e.preventDefault();});
 joy.addEventListener('pointermove',e=>{if(e.pointerId===joyId)mj(e);});
